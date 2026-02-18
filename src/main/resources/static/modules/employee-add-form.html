@@ -1,0 +1,62 @@
+<span id='notificationSection'></span>
+<span id='employeeAddModule' >
+<h2>Employee (Add Module)</h2>
+<form id='employeeAddForm'>
+<table>
+<tr>
+<td>Name</td>
+<td><input type='text' id='name' name='name' maxlength='50' size='51'>
+<span id='nameErrorSection' class='error'></span></td>
+</tr>
+<tr>
+<td>Designation</td>
+<td><select id='designationCode' name='designationCode'>
+<option value='-1'>&lt;Select Designation&gt;</option>
+</select><span id='designationCodeErrorSection' class='error'></span></td>
+    </td>
+</tr>
+<tr>
+<td>Date Of Birth</td>
+<td><input type='Date' id='dateOfBirth' name='dateOfBirth' value='1970-01-01'>
+<span id='dateOfBirthErrorSection' class='error'></span></td>
+</tr>
+
+
+<tr>
+<td>Gender</td>
+<td>
+<input type='radio' id='male' name='gender' value='M'>Male
+&nbsp;&nbsp;&nbsp;&nbsp;
+<input type='radio' id='female' name='gender' value='F'>Female
+<span id='genderErrorSection' class='error'></span></td>
+</tr>
+
+<tr>
+<td>Indian ?</td>
+<td><input type='checkbox' id='isIndian' name='isIndian' value='Y'>
+ <td><span id='isIndianErrorSection' class='error'></span></td>
+</tr>
+
+<td>Basic Salary</td>
+<td><input type='text' style='text-align:right' id='basicSalary' name='basicSalary'>
+<span id='basicSalaryErrorSection' class='error'></span></td>
+    </tr>
+
+    <td>PAN Number</td>
+<td><input type='text' id='panNumber' name='panNumber' maxlength='10' size='11'>
+<span id='panNumberErrorSection' class='error'></span></td>
+    </tr>
+
+    <td>Aadhar Card Number</td>
+<td><input type='text' id='aadharCardNumber' name='aadharCardNumber' maxlength='12' size='13'>
+<span id='aadharCardNumberErrorSection' class='error'></span></td>
+    </tr>
+
+    <tr colspan='2'>
+<td><button type='button' onclick="window.pages.employeeAddForm.save()">Add</button>
+&nbsp;&nbsp;
+<button type='button' onclick="loadModule('employees')">Cancel</button></td>
+</tr>
+</table>
+</form>
+</span>

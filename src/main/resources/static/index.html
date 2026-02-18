@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <title>HR Application</title>
+    <link rel='stylesheet' type='text/css' href='/css/styles.css'>
+    <link rel='stylesheet' type='text/css' href='/css/designations.css'>
+    <link rel='stylesheet' type='text/css' href='/css/employees.css'>
+
+</head>
+<body>
+<!-- Main container starts here-->
+<div class='main-container'>
+    <!-- header starts here -->
+    <div class='header'>
+        <a href='#'><img src='/images/logo.png' class='logo'></a>
+        <div class='brand-name'>&nbsp;HR Core</div>
+        <div class='username'>
+            <img src='/images/user.png'/>
+            <span id='username-1'></span>&nbsp;
+            <a href='#' onclick='logout()'>Logout</a>
+        </div>
+    </div><!-- header ends here -->
+    <!-- content-section starts here -->
+    <div class='content'>
+        <!-- left panel starts here -->
+        <div id='navigationPanel' class='content-left-panel'>
+            <a href="#" id='link-designations' class='nav-link' onclick="loadModule('designations')">Designations</a><br>
+            <a href="#" id='link-employees' class='nav-link' onclick="loadModule('employees')">Employees</a><br><br>
+
+            <a href="#" id='link-home' class='nav-link.active nav-link-hidden' onclick="loadModule('HOME')">Home</a>
+        </div>
+        <!-- left panel ends here -->
+        <!-- right panel starts here -->
+        <div class='content-right-panel' id="main-content">
+            Welcome <span id='username-2'></span>, User
+        </div> <!-- right panel ends here -->
+    </div>
+    <!-- content-section ends here -->
+    <!-- footer starts here -->
+    <div class='footer'>
+        &copy; HR Core 2024
+        <!-- footer ends here -->
+    </div>
+</div>
+<script src="/js/service/designation-service.js"></script>
+<script src="/js/service/employee-service.js"></script>
+<script src="/js/pages/designations.js"></script>
+<script src="/js/validation/designation-validator.js"></script>
+<script src="/js/pages/designation-add-form.js"></script>
+<script src="/js/pages/designation-edit-form.js"></script>
+<script src="/js/pages/designation-delete-confirm.js"></script>
+<script src="/js/validation/employee-validator.js"></script>
+<script src="/js/pages/employees.js"></script>
+<script src="/js/pages/employee-add-form.js"></script>
+<script src="/js/router.js"></script>
+<!-- Main container ends here-->
+</body>
+</html>
