@@ -80,12 +80,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDTO update(EmployeeDTO employeeDTO)
+    public EmployeeDTO update(String employeeId,EmployeeDTO employeeDTO)
     {
-      Integer employeeId=Integer.parseInt(employeeDTO.getEmployeeId().substring(1));
+      Integer numericEmployeeId=Integer.parseInt(employeeId.substring(1));
 
-      Employee existingEmployee=employeeRepository.findById(employeeId)
-              .orElseThrow(()->new ResourceNotFoundException("Employee not found with ID : "+employeeDTO.getEmployeeId()));
+      Employee existingEmployee=employeeRepository.findById(numericEmployeeId)
+              .orElseThrow(()->new ResourceNotFoundException("Employee not found with ID : "+employeeId));
 
       Map<String,String> errors=new  HashMap<>();
 

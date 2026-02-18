@@ -23,14 +23,8 @@ public class EmployeeController {
 
     @PostMapping
     public ResponseEntity<EmployeeDTO> createEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
-        try {
-            System.out.println(employeeDTO);
             EmployeeDTO createdEmployee = employeeService.add(employeeDTO);
             return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
-        }catch(Exception e){
-            e.printStackTrace(); // THIS is what you need
-            throw e;
-        }
     }
     @GetMapping
     public ResponseEntity<List<EmployeeDTO>> getAllEmployees()
@@ -44,9 +38,11 @@ public class EmployeeController {
         EmployeeDTO employee=employeeService.getByEmployeeId(employeeId);
         return ResponseEntity.ok(employee);
     }
-    @PutMapping
-    public ResponseEntity<EmployeeDTO> updateEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
-        EmployeeDTO updatedEmployee=employeeService.update(employeeDTO);
+    @PutMapping("/{employeeId}")
+    public ResponseEntity<EmployeeDTO> updateEmployee(
+            @PathVariable String employeeId,
+            @Valid @RequestBody EmployeeDTO employeeDTO) {
+        EmployeeDTO updatedEmployee=employeeService.update(employeeId,employeeDTO);
         return ResponseEntity.ok(updatedEmployee);
     }
     @DeleteMapping("/{employeeId}")
