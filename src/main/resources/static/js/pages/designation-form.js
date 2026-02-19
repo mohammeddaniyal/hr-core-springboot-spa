@@ -33,7 +33,10 @@ setupAdd: function()
     document.getElementById('formTitle').innerText='Designation (Add Form)';
     const btn=document.getElementById('submitBtn');
     btn.textContent='Add';
-    btn.onclick=()=>this.save();
+    btn.onclick=(e)=>{
+    e.preventDefault(); // to tell browser STOP! Don't submit the form or follow the link
+    this.save();
+    }
 },
 
 setupEdit: async function()
@@ -41,7 +44,11 @@ setupEdit: async function()
     document.getElementById('formTitle').innerText='Designation (Edit Form)';
     const btn=document.getElementById('submitBtn');
     btn.textContent='Update';
-    btn.onclick=()=>this.update();
+    btn.onclick=(e)=>
+    {
+    e.preventDefault();// to tell browser STOP! Don't submit the form or follow the link
+    this.update();
+    }
     try
     {
         const designation=await designationService.getByCode(this.code);
@@ -88,10 +95,10 @@ save: async function()
             <table>
             <tr>
             <td>
-            <button type="button" onclick="loadModule('designation-form',{mode:'ADD'})">Yes</button>
+            <button type="button" onclick="loadModule('designation-form',{mode:'ADD'}); return false;">Yes</button>
             </td>
             <td>
-            <button type="button" onclick="loadModule('designations')">No</button>
+            <button type="button" onclick="loadModule('designations'); return false;">No</button>
             </td>
             </tr>
             </table>
@@ -145,7 +152,7 @@ save: async function()
                 notification.innerHTML=`
                 <h3>Notification</h3><br>
                 Designation Updated <br>
-                <button type="button" onclick="loadModule('designations')">Ok</button>
+                <button type="button" onclick="loadModule('designations'); return false;">Ok</button>
                 `;
             }catch(error)
             {

@@ -12,8 +12,15 @@ initDelete: async function()
 {
   document.getElementById('confirmTitle').innerText=`Delete ${this.entityName}`;
   const confirmData=document.getElementById('confirmData');
-  document.getElementById('confirmYesBtn').onclick = () => this.confirm();
-  document.getElementById('confirmNoBtn').onclick = () => loadModule('employees');
+  document.getElementById('confirmYesBtn').onclick = (e) =>
+   {
+   e.preventDefault();
+   this.confirm();
+   }
+  document.getElementById('confirmNoBtn').onclick = (e) => {
+  e.preventDefault
+  loadModule('employees');
+  }
     try
     {
         const employee=await employeeService.getByEmployeeId(this.employeeId);
@@ -43,7 +50,7 @@ confirm: async function()
             <h3>Notification</h3>
             Employee Deleted
             <br>
-            <button type='button' onclick="loadModule('employees')">Ok</button>
+            <button type='button' onclick="loadModule('employees'); return false;">Ok</button>
         `;
     }catch(error)
     {

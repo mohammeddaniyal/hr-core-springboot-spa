@@ -26,16 +26,16 @@ load: async function()
             const formattedDob=`dateParts[2]/dateParts[1]/dateParts[0]`;
 
             rowsHTML+=`
-            <tr style='cursor:pointer' onclick="window.pages.employees.selectEmployee(this,'${employee.employeeId}')">
+            <tr style='cursor:pointer' onclick="window.pages.employees.selectEmployee(this,'${employee.employeeId}'); return false;">
             <td>${index+1}</td>
             <td>${employee.employeeId}</td>
             <td>${employee.name}</td>
             <td>${employee.designation}</td>
             <td>
-                <a href='#' onclick="loadModule('employee-form',{ id: '${employee.employeeId}', mode: 'EDIT'})">Edit</a>
+                <a href='#' onclick="loadModule('employee-form',{ id: '${employee.employeeId}', mode: 'EDIT'}); return false;">Edit</a>
             </td>
             <td>
-                <a href='#' onclick="loadModule('employee-delete-confirm',{ id: '${employee.employeeId}'})">Delete</a>
+                <a href='#' onclick="loadModule('employee-delete-confirm',{ id: '${employee.employeeId}'}); return false;">Delete</a>
             </td>
             </tr>
             `;

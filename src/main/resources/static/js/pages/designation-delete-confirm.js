@@ -34,7 +34,7 @@ delete: async function()
             notification.innerHTML=`
             <h3>Notification</h3><br>
             Designation Deleted <br>
-            <button type="button" onclick="loadModule('designations')">Ok</button>
+            <button type="button" onclick="loadModule('designations'); return false;">Ok</button>
             `;
         }catch(error)
         {
@@ -60,7 +60,7 @@ delete: async function()
         {
             notification.innerHTML+=`<br>
             ${errors.message}<br>
-            <button type='button' onclick="loadModule('designations')" >Ok</button>
+            <button type='button' onclick="loadModule('designations'); return false;" >Ok</button>
             `;
         }else if(errors.message)
         {

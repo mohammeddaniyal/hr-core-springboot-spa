@@ -39,7 +39,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(form->form
-                        .defaultSuccessUrl("/index.html",true)
+                        .defaultSuccessUrl("/",true)
                         .permitAll());
 return http.build();
 

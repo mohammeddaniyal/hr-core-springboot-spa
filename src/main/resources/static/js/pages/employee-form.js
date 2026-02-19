@@ -36,7 +36,10 @@ setupAdd: function()
     document.getElementById('formTitle').innerText='Employee (Add Form)';
     const btn=document.getElementById('submitBtn');
     btn.textContent='Add';
-    btn.onclick=()=>this.save();
+    btn.onclick=(e)=>{
+    e.preventDefault();
+    this.save();
+    }
     this.clearForm();
 },
 
@@ -45,7 +48,10 @@ setupEdit: async function()
     document.getElementById('formTitle').innerText='Employee (Edit Form)';
     const btn=document.getElementById('submitBtn');
     btn.textContent='Update';
-    btn.onclick=()=>this.update();
+    btn.onclick=(e)=>{
+    e.preventDefault();
+    this.update();
+    }
     try
     {
         const employee=await employeeService.getByEmployeeId(this.employeeId);
@@ -84,10 +90,10 @@ save: async function()
             <table>
             <tr>
             <td>
-            <button type="button" onclick="loadModule('employee-form',{mode: 'ADD'})">Yes</button>
+            <button type="button" onclick="loadModule('employee-form',{mode: 'ADD'}) ; return false;">Yes</button>
             </td>
             <td>
-            <button type="button" onclick="loadModule('employees')">No</button>
+            <button type="button" onclick="loadModule('employees'); return false;">No</button>
             </td>
             </tr>
             </table>
@@ -121,7 +127,7 @@ update: async function()
             notification.innerHTML=`
             <h3>Notification</h3><br>
             Employee updated<br>
-            <button type="button" onclick="loadModule('employees')">Ok</button>
+            <button type="button" onclick="loadModule('employees'); return false;">Ok</button>
     `;
     }catch(error)
     {

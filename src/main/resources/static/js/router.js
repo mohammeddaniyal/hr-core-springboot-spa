@@ -1,11 +1,37 @@
 const mainContent=document.getElementById('main-content');
 
 
-const ACTIVE_CLASS='nav-link.active';
+const ACTIVE_CLASS='nav-link-active';
 const HIDDEN_CLASS='nav-link-hidden';
 
 async function loadModule(moduleName,params={})
 {
+
+    let url='/index.html';
+    if(moduleName==='employees')
+    {
+        url='/employees';
+    }else if(moduleName==='employee-form' && params.mode==='ADD')
+    {
+        url='/employees/add';
+    }else if(moduleName==='employee-form' && params.mode==='EDIT')
+    {
+        url=`/employees/edit/${params.id}`;
+    }else if(moduleName==='designations')
+    {
+        url='/designations';
+    }else if(moduleName==='designation-form' && params.mode==='ADD')
+    {
+        url='/designations/add';
+    }else if(moduleName==='designation-form' && params.mode==='EDIT')
+    {
+        url=`/designations/edit/${params.id}`;
+    }
+
+    //  Change the Browser URL (No Page Reload!)
+    //  save the 'moduleName' and 'params' in the history so the Back button works later.
+    window.history.pushState({ module: moduleName, params: params }, "", url);
+
     if(moduleName==='HOME')
     {
         mainContent.innerHTML="<h1>Welcome</h1>"
@@ -30,7 +56,9 @@ async function loadModule(moduleName,params={})
         {
             controller.load(params);
         }
-        updateNavigation('designations');
+        const baseModule=moduleName.split('-')[0];
+        const navigationKey=baseModule.endsWith('s')?baseModule:baseModule+'s';
+        updateNavigation(navigationKey);
         }else
         {
             mainContent.innerHTML=`<h3 style="color:red">Error module '${moduleName}' not found</h3>`
@@ -71,9 +99,16 @@ if(linkDesignations)linkDesignations.classList.add(ACTIVE_CLASS);
  {
  if(linkEmployees)linkEmployees.classList.add(ACTIVE_CLASS);
  }
-
-
-
-
 }
+
+window.onpopstate=function(event)
+{
+    if(event.state)
+    {
+        loadModule(event.state.module,event.state.params);
+    }else
+    {
+        loadModule('HOME');
+    }
+};
 

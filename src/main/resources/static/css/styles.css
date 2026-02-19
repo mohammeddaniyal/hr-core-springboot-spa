@@ -80,7 +80,7 @@ border:1px solid white;
     text-decoration: underline;
     color: blue;
 }
-.nav-link.active
+.nav-link-active
 {
     cursor: default;
     text-decoration: none;

@@ -26,10 +26,10 @@ window.pages['designations']={
                         <td class="col-serial">${index+1}</td>
                         <td class="col-designation">${designation.title}</td>
                         <td class="col-action">
-                            <a href="#" onclick="loadModule('designation-form', {id: '${designation.code}', mode:'EDIT'})">Edit</a>
+                            <a href="#" onclick="loadModule('designation-form', {id: '${designation.code}', mode:'EDIT'}); return false;">Edit</a>
                         </td>
                         <td class="col-action">
-                            <a href="#" onclick="loadModule('designation-delete-confirm', {id: '${designation.code}'})">Delete</a>
+                            <a href="#" onclick="loadModule('designation-delete-confirm', {id: '${designation.code}'}); return false;">Delete</a>
                         </td>
                     </tr>
                 `;
