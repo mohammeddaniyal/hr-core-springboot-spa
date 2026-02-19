@@ -5,6 +5,7 @@ import com.thinking.machines.hr.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -22,23 +23,27 @@ public class EmployeeController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<EmployeeDTO> createEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
             EmployeeDTO createdEmployee = employeeService.add(employeeDTO);
             return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
     }
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public ResponseEntity<List<EmployeeDTO>> getAllEmployees()
     {
         List<EmployeeDTO> employees=employeeService.getAll();
         return ResponseEntity.ok(employees);
     }
     @GetMapping("/{employeeId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable String employeeId)
     {
         EmployeeDTO employee=employeeService.getByEmployeeId(employeeId);
         return ResponseEntity.ok(employee);
     }
     @PutMapping("/{employeeId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<EmployeeDTO> updateEmployee(
             @PathVariable String employeeId,
             @Valid @RequestBody EmployeeDTO employeeDTO) {
@@ -46,6 +51,7 @@ public class EmployeeController {
         return ResponseEntity.ok(updatedEmployee);
     }
     @DeleteMapping("/{employeeId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> deleteEmployee(@PathVariable String employeeId) {
         employeeService.delete(employeeId);
         return ResponseEntity.noContent().build();

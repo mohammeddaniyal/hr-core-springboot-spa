@@ -3,7 +3,8 @@ package com.thinking.machines.hr.config;
 import com.thinking.machines.hr.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -15,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
 
@@ -35,7 +37,15 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth
+                        // public endpoints
                         .requestMatchers("/login","/css/**","/js/**").permitAll()
+                        // read access (GET)
+                        .requestMatchers(HttpMethod.GET,"/api/employees/**","/api/designations/**").hasAnyAuthority("ADMIN","USER")
+                        // write access (POST,PUT,DELETE)
+                        .requestMatchers(HttpMethod.POST,"/api/employees/**","/api/designations/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/api/employees/**","/api/designations/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/api/employees/**","/api/designations/**").hasAnyAuthority("ADMIN")
+                        // any other request must be atleast logged in
                         .anyRequest().authenticated()
                 )
                 .formLogin(form->form
