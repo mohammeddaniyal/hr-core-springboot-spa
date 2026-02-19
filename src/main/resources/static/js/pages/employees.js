@@ -7,6 +7,8 @@ selectedRow:null,
 load: async function()
 {
     const tableBody=document.getElementById('employeeTableBody');
+    const userRole=sessionStorage.getItem('userRole');
+    let actionButtonsHTML='';
     try
     {
        const data=await employeeService.getAll();
@@ -24,6 +26,23 @@ load: async function()
         // API sends "yyyy-mm-dd"
             const dateParts=employee.dateOfBirth.split('-');
             const formattedDob=`dateParts[2]/dateParts[1]/dateParts[0]`;
+            let actionButtonsHTML='';
+
+            if(userRole==='ADMIN')
+            {
+                actionButtonsHTML=`
+                <td>
+                    <a href='#' onclick="loadModule('employee-form',{ id: '${employee.employeeId}', mode: 'EDIT'}); return false;">Edit</a>
+                </td>
+                <td>
+                    <a href='#' onclick="loadModule('employee-delete-confirm',{ id: '${employee.employeeId}'}); return false;">Delete</a>
+                </td>
+                `;
+            }else{
+                actionButtonsHTML = `
+                    <td colspan="2" style="color: gray; font-style: italic;">View Only</td>
+                `;
+            }
 
             rowsHTML+=`
             <tr style='cursor:pointer' onclick="window.pages.employees.selectEmployee(this,'${employee.employeeId}'); return false;">
@@ -31,12 +50,7 @@ load: async function()
             <td>${employee.employeeId}</td>
             <td>${employee.name}</td>
             <td>${employee.designation}</td>
-            <td>
-                <a href='#' onclick="loadModule('employee-form',{ id: '${employee.employeeId}', mode: 'EDIT'}); return false;">Edit</a>
-            </td>
-            <td>
-                <a href='#' onclick="loadModule('employee-delete-confirm',{ id: '${employee.employeeId}'}); return false;">Delete</a>
-            </td>
+             ${actionButtonsHTML}
             </tr>
             `;
 

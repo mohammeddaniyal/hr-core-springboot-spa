@@ -97,3 +97,13 @@ display: none;
 {
 color:red;
 }
+.admin-only
+{
+    display: none !important;
+}
+body.role-ADMIN .admin-only{
+    display: inline-block !important;
+}
+body.role-ADMIN tr.admin-only {
+    display: table-row !important;
+}

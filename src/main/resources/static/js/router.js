@@ -4,11 +4,36 @@ const mainContent=document.getElementById('main-content');
 const ACTIVE_CLASS='nav-link-active';
 const HIDDEN_CLASS='nav-link-hidden';
 
+window.addEventListener('DOMContentLoaded', async () => {
+
+    try {
+        const response = await fetch('/api/auth/me');
+
+        if (response.ok) {
+            const user = await response.json();
+
+            sessionStorage.setItem('userRole', user.role);
+            sessionStorage.setItem('username', user.username);
+
+            // using css trick, to stamp the body with user role
+            document.body.classList.add('role-' + user.role);
+
+            console.log("Logged in as:", user.username, "| Role:", user.role);
+        } else {
+            console.warn("User not authenticated. Redirecting to login...");
+            window.location.href = '/login';
+            return;
+        }
+    } catch (error) {
+        console.error("Failed to fetch user data:", error);
+    }
+});
+
 async function loadModule(moduleName,params={}, push=true)
 {
 if(push)
 {
-    let url='/index.html';
+    let url='/';
     if(moduleName==='employees')
     {
         url='/employees';
