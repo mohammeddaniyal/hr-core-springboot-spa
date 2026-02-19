@@ -6,7 +6,6 @@ employeeList:[],
 selectedRow:null,
 load: async function()
 {
-    console.log('Employees page loaded');
     const tableBody=document.getElementById('employeeTableBody');
     try
     {
@@ -24,7 +23,6 @@ load: async function()
         // Formatting Date manually to match logic (dd/mm/yyyy) in employee grid box
         // API sends "yyyy-mm-dd"
             const dateParts=employee.dateOfBirth.split('-');
-            console.log(`date of birth : ${employee.dateOfBirth}`);
             const formattedDob=`dateParts[2]/dateParts[1]/dateParts[0]`;
 
             rowsHTML+=`
@@ -34,7 +32,7 @@ load: async function()
             <td>${employee.name}</td>
             <td>${employee.designation}</td>
             <td>
-                <a href='#' onclick="loadModule('employee-edit-form',{ id: '${employee.employeeId}'})">Edit</a>
+                <a href='#' onclick="loadModule('employee-form',{ id: '${employee.employeeId}', mode: 'EDIT'})">Edit</a>
             </td>
             <td>
                 <a href='#' onclick="loadModule('employee-delete-confirm',{ id: '${employee.employeeId}'})">Delete</a>

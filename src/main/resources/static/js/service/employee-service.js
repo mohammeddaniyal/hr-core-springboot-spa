@@ -52,9 +52,58 @@ if(response.ok)
     }
     throw {type:'Server_ERROR',message:"System error "+response.statusText, errors:errorBody};
 }
-
-
+async update(employeeId,employee)
+{
+const response=await fetch(`${this.api}/${employeeId}`,{
+method:'PUT',
+headers:{
+'Content-Type':'application/json'
+},
+body:JSON.stringify(employee)
+});
+// success case (200 ok)
+if(response.ok)
+{
+    return await response.json();
 }
+
+    let errorBody;
+    try
+    {
+        errorBody=await response.json();
+    }catch(error)
+    {
+        throw {type:'Server_ERROR',message:response.statusText};
+    }
+
+    if(response.status===400)
+    {
+        throw{
+        type:'VALIDATION',
+        errors:errorBody
+        };
+    }
+    if(response.status===409)
+    {
+        throw {type:'BUSINESS', errors: errorBody};
+    }
+    if(response.status===422)
+    {
+        throw {type:'BUSINESS', errors: errorBody};
+    }
+    throw {type:'Server_ERROR',message:"System error "+response.statusText, errors:errorBody};
+}
+
+async getByEmployeeId(employeeId)
+{
+const response=await fetch(`${this.api}/${employeeId}`);
+if(!response.ok) throw new Error('Employee not found');
+return await response.json();
+}
+}
+
+
+
 
 
 const employeeService=new EmployeeService();

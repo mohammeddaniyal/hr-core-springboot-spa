@@ -6,7 +6,6 @@ const HIDDEN_CLASS='nav-link-hidden';
 
 async function loadModule(moduleName,params={})
 {
-    console.log(`loading module ${moduleName}`);
     if(moduleName==='HOME')
     {
         mainContent.innerHTML="<h1>Welcome</h1>"
@@ -29,7 +28,6 @@ async function loadModule(moduleName,params={})
 
         if(controller && typeof controller.load==='function')
         {
-            console.log(`[Router] Loading controller: ${controllerName}`);
             controller.load(params);
         }
         updateNavigation('designations');

@@ -3,7 +3,6 @@ window.pages = window.pages || {}
 window.pages['designations']={
    load: async function()
     {
-        console.log("Designations page loaded");
         const tableBody=document.getElementById('designationTableBody');
 
         try
