@@ -5,7 +5,6 @@ const ACTIVE_CLASS='nav-link-active';
 const HIDDEN_CLASS='nav-link-hidden';
 
 window.addEventListener('DOMContentLoaded', async () => {
-
     try {
         const response = await fetch('/api/auth/me');
 
@@ -18,12 +17,12 @@ window.addEventListener('DOMContentLoaded', async () => {
             // using css trick, to stamp the body with user role
             document.body.classList.add('role-' + user.role);
             document.getElementById('username-1').textContent = user.username;
-            console.log("Logged in as:", user.username, "| Role:", user.role);
         } else {
             console.warn("User not authenticated. Redirecting to login...");
             window.location.href = '/login';
             return;
         }
+        initRouter();
     } catch (error) {
         console.error("Failed to fetch user data:", error);
     }
@@ -67,7 +66,6 @@ if(push)
     if(moduleName==='HOME')
     {
         let username=sessionStorage.getItem('username');
-        console.log(`hello ${username}`)
         //alert(user)
         mainContent.innerHTML=`<h1>Welcome ${username}</h1>`;
         updateNavigation(moduleName);
@@ -165,11 +163,10 @@ window.onpopstate=function(event)
     }
 };
 
-window.addEventListener('DOMContentLoaded',()=>{
-//    alert('DOMContentLoaded');
+function initRouter()
+{
     // look at the address bar
     const currentPath=window.location.pathname;
-    console.log("page loaded, current path is ",currentPath);
 
     if(currentPath==='/employees')
     {
@@ -248,7 +245,7 @@ window.addEventListener('DOMContentLoaded',()=>{
         window.history.replaceState(null, "", "/");
         loadModule('HOME', undefined, false);
     }
-});
+}
 
 function parseDesignationCode(currentPath)
 {
