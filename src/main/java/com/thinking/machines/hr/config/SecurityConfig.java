@@ -1,6 +1,7 @@
 package com.thinking.machines.hr.config;
 
 import com.thinking.machines.hr.service.UserDetailsServiceImpl;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -50,7 +51,16 @@ public class SecurityConfig {
                 )
                 .formLogin(form->form
                         .defaultSuccessUrl("/",true)
-                        .permitAll());
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout") // The URL  JS fetch() is calling[from router.js (window.logout)]
+                        .invalidateHttpSession(true) // Destroys the server session
+                        .deleteCookies("JSESSIONID") // Deletes the browser's auth cookie
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            // Since this is an SPA REST call, just returning 200 OK instead of a full HTML page
+                            response.setStatus(HttpServletResponse.SC_OK);
+                        })
+                );
 return http.build();
 
     }

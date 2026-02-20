@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
             // using css trick, to stamp the body with user role
             document.body.classList.add('role-' + user.role);
-
+            document.getElementById('username-1').textContent = user.username;
             console.log("Logged in as:", user.username, "| Role:", user.role);
         } else {
             console.warn("User not authenticated. Redirecting to login...");
@@ -262,3 +262,29 @@ function parseEmployeeId(currentPath)
         const isValid = employeeId && /^[a-zA-Z0-9]+$/.test(employeeId);
         return {isValid,employeeId};
 }
+
+
+// --- Global Logout Function ---
+window.logout = async function() {
+
+    // Spring Boot backend to kill the session
+    try {
+        // Spring Security handles POST requests to /logout by default
+        await fetch('/logout', {
+            method: 'POST'
+        });
+    } catch (error) {
+        console.error("Backend logout failed:", error);
+    }
+
+    // 2. Wipe the Frontend Memory
+    sessionStorage.removeItem('userRole');
+    sessionStorage.removeItem('username');
+
+    // 3. Strip the security stamp off the body tag
+    document.body.classList.remove('role-ADMIN', 'role-USER');
+
+    // 4. Redirect the user back to the login screen
+    // Change '/login.html' to whatever your actual login URL is
+    window.location.replace('/login');
+};
