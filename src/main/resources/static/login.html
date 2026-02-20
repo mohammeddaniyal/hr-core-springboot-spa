@@ -4,45 +4,6 @@
     <meta charset='utf-8'>
     <title>HR Application - Login</title>
     <link rel='stylesheet' type='text/css' href='/css/styles.css'>
-    <script>
-        async function authentication()
-        {
-            const usernameStr=document.getElementById('username').value.trim();
-            const passwordStr=document.getElementById('password').value.trim();
-            const errorSection=document.getElementById('errorSection');
-            errorSection.innerHTML='';
-
-            // note: spring security don't excpects the credentials in JSON format
-            // They expect Form Data by default
-            const formData=new URLSearchParams();
-            formData.append('username',usernameStr);
-            formData.append('password',passwordStr);
-            try
-            {
-                const response=await fetch('/login',{
-                method:'POST',
-                headers:{
-                    'contentType':'application/x-www-form-urlencoded'
-                },
-                body: formData
-                });
-
-                if(response.url.includes('error'))
-                {
-                    errorSection.innerHTML="Invalid username or password";
-                }else if(response.ok)
-                {
-                    window.location.replace('/index.html');
-                }
-            }catch(error)
-            {
-                console.error("Login request failed:",error);
-                errorSection.innerHTML="Cannot connect to server";
-            }
-
-
-        }
-    </script>
 </head>
 <body>
 <!-- Main container starts here-->
@@ -56,6 +17,7 @@
     <div class='content'>
         <!-- login form section starts here -->
         <div class='loginForm'>
+            <form action="/login" method="POST">
             <table border='0'>
                 <tr>
                     <td colspan='2' align='center'>
@@ -73,10 +35,16 @@
                 </tr>
                 <tr>
                     <td colspan='2' align='center'>
-                        <button type='button' onclick='authentication()'>Login</button>
+                        <button type='submit' >Login</button>
                     </td>
                 </tr>
             </table>
+            </form>
+            <script>
+                if (window.location.search.includes('error')) {
+                    document.getElementById('errorSection').innerHTML = 'Invalid username or password.';
+                }
+            </script>
         </div>
         <!-- login form section ends here -->
     </div>

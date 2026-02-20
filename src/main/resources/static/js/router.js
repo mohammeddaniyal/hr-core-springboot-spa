@@ -66,7 +66,10 @@ if(push)
 }
     if(moduleName==='HOME')
     {
-        mainContent.innerHTML="<h1>Welcome</h1>"
+        let username=sessionStorage.getItem('username');
+        console.log(`hello ${username}`)
+        //alert(user)
+        mainContent.innerHTML=`<h1>Welcome ${username}</h1>`;
         updateNavigation(moduleName);
         return;
     }
