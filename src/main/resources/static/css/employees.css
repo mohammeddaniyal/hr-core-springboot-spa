@@ -44,3 +44,16 @@ text-align:center;
 width:100px;
 text-align:center;
 }
+.view-only-cell
+{
+    color:gray;
+    font-style: italic;
+}
+.selected-row
+{
+    background: #7C7B7B;
+    color: white;
+}
+.selected-row .view-only-cell {
+    color: white;
+}

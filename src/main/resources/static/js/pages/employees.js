@@ -39,7 +39,7 @@ load: async function()
                 `;
             }else{
                 actionButtonsHTML = `
-                    <td colspan="2" style="color: gray; font-style: italic;">View Only</td>
+                    <td colspan="2" class="view-only-cell">View Only</td>
                 `;
             }
 
@@ -69,11 +69,9 @@ selectEmployee: function(row,employeeId)
     if(this.selectedRow===row) return;
     if(this.selectedRow!=null)
     {
-        this.selectedRow.style.background="white";
-        this.selectedRow.style.color="black";
+        this.selectedRow.classList.remove('selected-row');
     }
-    row.style.background="#7C7B7B";
-    row.style.color="white";
+    row.classList.add('selected-row');
     this.selectedRow=row;
     const employee=this.employeeList.find(function(e)
     {
