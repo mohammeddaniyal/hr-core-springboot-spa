@@ -6,6 +6,7 @@ import jakarta.validation.constraints.*;
 
 import java.math.*;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Objects;
 
 public class EmployeeDTO
@@ -151,4 +152,17 @@ public class EmployeeDTO
     {
         return Objects.hash(employeeId);
     }
+
+
+
+    @AssertTrue(message = "Employee must be at least 18 years old")
+    public boolean isAdult() {
+
+        if (dateOfBirth == null) {
+            return true; // let @NotNull handle this
+        }
+
+        return Period.between(dateOfBirth, LocalDate.now()).getYears() >= 18;
+    }
+
 }
