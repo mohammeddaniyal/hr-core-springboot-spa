@@ -27,8 +27,9 @@ initDelete: async function()
         confirmData.innerHTML=`
             <strong>Name:</strong> ${employee.name}<br>
             <strong>Designation:</strong> ${employee.designation}<br>
-            <strong>DOB:</strong> ${this.formatDate(employee.dateOfBirth)}<br>
+            <strong>Date of Birth:</strong> ${this.formatDate(employee.dateOfBirth)}<br>
             <strong>Gender:</strong> ${employee.gender === 'M' ? 'Male' : 'Female'}<br>
+            <strong>Nationality:</strong> ${employee.isIndian===true ? 'Indian':'Non Indian'}<br>
             <strong>Salary:</strong> ₹ ${employee.basicSalary}<br>
             <strong>PAN:</strong> ${employee.panNumber}<br>
             <strong>Aadhar:</strong> ${employee.aadharCardNumber}<br>
