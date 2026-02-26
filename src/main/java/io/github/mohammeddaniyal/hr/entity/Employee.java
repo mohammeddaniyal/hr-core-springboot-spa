@@ -27,7 +27,7 @@ public class Employee {
     @Column(name="isIndian", nullable = false)
     private Boolean isIndian;
 
-    @Column(name="basic_salary", precision =  10, scale = 2)
+    @Column(name="basic_salary", precision =  10, scale = 2, nullable=false)
     private BigDecimal basicSalary;
 
     @Column(name="pan_number", unique = true,  nullable = false, length=15)
