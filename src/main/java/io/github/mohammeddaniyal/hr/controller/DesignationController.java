@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/designations")
-@CrossOrigin(origins = "*")
 public class DesignationController {
     @Autowired
     private DesignationService designationService;
