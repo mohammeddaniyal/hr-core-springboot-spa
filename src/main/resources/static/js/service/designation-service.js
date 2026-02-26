@@ -24,7 +24,8 @@ async add(designation)
 const response=await fetch(this.api,{
 method:'POST',
 headers:{
-'Content-Type':'application/json'
+'Content-Type':'application/json',
+'X-XSRF-TOKEN': getCsrfToken()
 },
 body:JSON.stringify(designation)
 });
@@ -63,7 +64,8 @@ async update(code,designation)
 const response=await fetch(`${this.api}/${code}`,{
 method:'PUT',
 headers:{
-'Content-Type':'application/json'
+'Content-Type':'application/json',
+'X-XSRF-TOKEN': getCsrfToken()
 },
 body:JSON.stringify(designation)
 });
@@ -98,7 +100,10 @@ if(response.ok)
 async delete(code)
 {
 const response=await fetch(`${this.api}/${code}`,{
-method:'DELETE'
+method:'DELETE',
+headers: {
+'X-XSRF-TOKEN': getCsrfToken()
+}
 });
 
     if(response.status===204)

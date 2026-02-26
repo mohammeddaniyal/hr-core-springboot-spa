@@ -16,7 +16,8 @@ async add(employee)
 const response=await fetch(this.api,{
 method:'POST',
 headers:{
-'Content-Type':'application/json'
+'Content-Type':'application/json',
+'X-XSRF-TOKEN': getCsrfToken()
 },
 body:JSON.stringify(employee)
 });
@@ -57,7 +58,8 @@ async update(employeeId,employee)
 const response=await fetch(`${this.api}/${employeeId}`,{
 method:'PUT',
 headers:{
-'Content-Type':'application/json'
+'Content-Type':'application/json',
+'X-XSRF-TOKEN': getCsrfToken()
 },
 body:JSON.stringify(employee)
 });
@@ -105,7 +107,10 @@ return await response.json();
 async delete(employeeId)
 {
 const response=await fetch(`${this.api}/${employeeId}`,{
-method:'DELETE'
+method:'DELETE',
+headers: {
+'X-XSRF-TOKEN': getCsrfToken()
+}
 });
 
     if(response.status===204)

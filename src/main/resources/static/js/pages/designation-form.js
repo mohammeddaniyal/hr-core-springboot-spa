@@ -87,7 +87,6 @@ save: async function()
         try
         {
             const response=await designationService.add(designation);
-            alert(`Designation ${response.title} added with code ${response.code}`);
             designationAddModule.innerHTML='';
             notification.innerHTML=`
             <h3>Notification</h3><br>

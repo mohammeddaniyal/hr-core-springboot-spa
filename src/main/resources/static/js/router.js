@@ -66,7 +66,6 @@ if(push)
     if(moduleName==='HOME')
     {
         let username=sessionStorage.getItem('username');
-        //alert(user)
         mainContent.innerHTML=`<h1>Welcome ${username}</h1>`;
         updateNavigation(moduleName);
         return;

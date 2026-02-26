@@ -6,55 +6,77 @@
     <link rel='stylesheet' type='text/css' href='/css/styles.css'>
 </head>
 <body>
-<!-- Main container starts here-->
 <div class='main-container'>
-    <!-- header starts here -->
     <div class='header'>
         <a href='/index.html'><img src='/images/logo.png' class='logo'></a><div class='brand-name'>&nbspHR Core</div>
     </div>
-    <!-- header ends here -->
-    <!-- content-section starts here -->
     <div class='content'>
-        <!-- login form section starts here -->
         <div class='loginForm'>
-            <form action="/login" method="POST">
-            <table border='0'>
-                <tr>
-                    <td colspan='2' align='center'>
-                        <span id='errorSection' class='error'></span><br>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Username</td>
-                    <td><input type='text' id='username' name='username' maxlength='15'></td>
-                </tr>
-                <tr>
-                    <td>Password</td>
-                    <td><input type='password' id='password' name='password' maxlength='15'>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan='2' align='center'>
-                        <button type='submit' >Login</button>
-                    </td>
-                </tr>
-            </table>
+            <form action="/login" method="POST" id="loginForm">
+                <table border='0'>
+                    <tr>
+                        <td colspan='2' align='center'>
+                            <span id='errorSection' class='error'></span><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Username</td>
+                        <td><input type='text' id='username' name='username' maxlength='15'></td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td><input type='password' id='password' name='password' maxlength='15'>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan='2' align='center'>
+                            <button type='submit' >Login</button>
+                        </td>
+                    </tr>
+                </table>
             </form>
+
             <script>
+                // Handle error messages from the URL
                 if (window.location.search.includes('error')) {
                     document.getElementById('errorSection').innerHTML = 'Invalid username or password.';
                 }
+
+                // --- NEW CSRF SCRIPT ADDED HERE ---
+                document.addEventListener('DOMContentLoaded', function() {
+                    const form = document.getElementById('loginForm');
+
+                    form.addEventListener('submit', function(e) {
+                        // 1. Extract the XSRF-TOKEN from the browser's cookies
+                        const value = `; ${document.cookie}`;
+                        const parts = value.split(`; XSRF-TOKEN=`);
+                        let csrfToken = '';
+                        if (parts.length === 2) {
+                            csrfToken = parts.pop().split(';').shift();
+                        }
+
+                        // 2. If a token exists, add it to the form as a hidden input
+                        if (csrfToken) {
+                            // Check if we already created the hidden input to avoid duplicates
+                            let existingInput = form.querySelector('input[name="_csrf"]');
+                            if (!existingInput) {
+                                const csrfInput = document.createElement('input');
+                                csrfInput.type = 'hidden';
+                                csrfInput.name = '_csrf'; // Spring Security requires exactly this name
+                                csrfInput.value = csrfToken;
+                                form.appendChild(csrfInput);
+                            } else {
+                                existingInput.value = csrfToken;
+                            }
+                        }
+                    });
+                });
             </script>
         </div>
-        <!-- login form section ends here -->
     </div>
-    <!-- content-section ends here -->
-    <!-- footer starts here -->
     <div class='footer'>
         &copy; HR Core 2026
-        <!-- footer ends here -->
     </div>
 </div>
-<!-- Main container ends here-->
 </body>
 </html>

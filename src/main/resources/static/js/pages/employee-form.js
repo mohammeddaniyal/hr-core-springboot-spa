@@ -81,7 +81,6 @@ save: async function()
     try
     {
     const response=await employeeService.add(employee);
-    alert(`Employee ${response.name} added with id ${response.employeeId}`);
 
     employeeAddModule.innerHTML='';
             notification.innerHTML=`
@@ -121,7 +120,6 @@ update: async function()
     try
     {
     const response=await employeeService.update(this.employeeId,employee);
-    alert(`Employee ${response.name} updated with id ${response.employeeId}`);
 
     employeeEditModule.innerHTML='';
             notification.innerHTML=`
